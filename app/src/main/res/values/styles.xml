@@ -1,0 +1,28 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="TextHeadingAppearance" parent="TextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorTextHeading</item>
+    </style>
+
+    <style name="ListItemContainerAppearance">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:background">@android:drawable/editbox_background</item>
+    </style>
+
+</resources>

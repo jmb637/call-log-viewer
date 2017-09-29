@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">Call Log Viewer</string>
+    <string name="call_count_label"># of calls:</string>
+    <string name="most_recent_label">most recent:</string>
+
+    <string-array name="sort_choices_array">
+        <item>Most recent sorting</item>
+        <item># of calls sorting</item>
+    </string-array>
+
+</resources>
