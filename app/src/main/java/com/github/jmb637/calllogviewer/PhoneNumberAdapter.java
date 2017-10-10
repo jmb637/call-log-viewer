@@ -67,7 +67,7 @@ public class PhoneNumberAdapter
         TextView phoneNumberView = (TextView) holder.itemView.findViewById(R.id.phoneNumberView);
         phoneNumberView.setText(formattedNumber);
 
-        if (!phoneNumber.getLocation().isEmpty()) {
+        if (phoneNumber.getLocation() != null && !phoneNumber.getLocation().isEmpty()) {
             TextView locationView = (TextView) holder.itemView.findViewById(R.id.locationView);
             locationView.setText(phoneNumber.getLocation());
             locationView.setVisibility(View.VISIBLE);
