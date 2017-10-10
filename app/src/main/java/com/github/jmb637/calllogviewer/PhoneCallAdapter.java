@@ -52,7 +52,7 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
     }
 
     /**
-     * @param holder the view holder being bound to
+     * @param holder   the view holder being bound to
      * @param position the position inside of the list of phone calls to be bound
      */
     @Override
@@ -68,10 +68,9 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
         dateView.setText(formattedDate);
 
         long duration = phoneCall.getDuration();
-        long hours = duration / (60 * 60 * 1000);
-        long minutes = (duration / (60 * 1000)) % 60;
-        long seconds = (duration / 1000) % 60;
-
+        long hours = duration / (60 * 60);
+        long minutes = (duration / 60) % 60;
+        long seconds = duration % 60;
         String formattedDuration = String.format(Locale.getDefault(),
                 "%dh:%02dm:%02ds", hours, minutes, seconds);
         TextView durationView = (TextView) holder.itemView.findViewById(R.id.durationView);
