@@ -6,7 +6,7 @@
              tools:context=".PhoneNumberActivity">
 
     <fragment
-        android:id="@+id/rvf"
+        android:id="@+id/phoneNumberFragment"
         android:name="com.github.jmb637.calllogviewer.PhoneNumberFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

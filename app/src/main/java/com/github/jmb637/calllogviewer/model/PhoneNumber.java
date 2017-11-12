@@ -1,4 +1,4 @@
-package com.github.jmb637.calllogviewer;
+package com.github.jmb637.calllogviewer.model;
 
 import android.support.annotation.NonNull;
 

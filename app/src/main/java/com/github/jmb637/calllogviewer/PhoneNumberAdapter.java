@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.jmb637.calllogviewer.model.PhoneNumber;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,8 +25,22 @@ public class PhoneNumberAdapter
      * A simple view holder required by the recycler view.
      */
     public static class PhoneNumberViewHolder extends RecyclerView.ViewHolder {
+        public final TextView phoneNumberView;
+        public final TextView locationView;
+        public final TextView callCountLabelView;
+        public final TextView callCountView;
+        public final TextView mostRecentLabelView;
+        public final TextView mostRecentView;
+
         public PhoneNumberViewHolder(View itemView) {
             super(itemView);
+
+            phoneNumberView = (TextView) itemView.findViewById(R.id.phoneNumberView);
+            locationView = (TextView) itemView.findViewById(R.id.locationView);
+            callCountLabelView = (TextView) itemView.findViewById(R.id.callCountLabelView);
+            callCountView = (TextView) itemView.findViewById(R.id.callCountView);
+            mostRecentLabelView = (TextView) itemView.findViewById(R.id.mostRecentLabelView);
+            mostRecentView = (TextView) itemView.findViewById(R.id.mostRecentView);
         }
     }
 
@@ -64,22 +80,22 @@ public class PhoneNumberAdapter
         holder.itemView.setTag(phoneNumber);
 
         String formattedNumber = PhoneNumberUtils.formatNumber(phoneNumber.getNumber(), "US");
-        TextView phoneNumberView = (TextView) holder.itemView.findViewById(R.id.phoneNumberView);
+        TextView phoneNumberView = holder.phoneNumberView;
         phoneNumberView.setText(formattedNumber);
 
         if (phoneNumber.getLocation() != null && !phoneNumber.getLocation().isEmpty()) {
-            TextView locationView = (TextView) holder.itemView.findViewById(R.id.locationView);
+            TextView locationView = holder.locationView;
             locationView.setText(phoneNumber.getLocation());
             locationView.setVisibility(View.VISIBLE);
         }
 
         String formattedCallCount = String.format(Locale.getDefault(),
                 "%d", phoneNumber.getCalls().size());
-        TextView callCountView = (TextView) holder.itemView.findViewById(R.id.callCountView);
+        TextView callCountView = holder.callCountView;
         callCountView.setText(formattedCallCount);
 
         String formattedDate = dateFormat.format(phoneNumber.getMostRecent());
-        TextView mostRecentView = (TextView) holder.itemView.findViewById(R.id.mostRecentView);
+        TextView mostRecentView = holder.mostRecentView;
         mostRecentView.setText(formattedDate);
     }
 

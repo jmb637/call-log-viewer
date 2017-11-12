@@ -1,4 +1,4 @@
-package com.github.jmb637.calllogviewer;
+package com.github.jmb637.calllogviewer.model;
 
 import java.io.Serializable;
 import java.util.Comparator;

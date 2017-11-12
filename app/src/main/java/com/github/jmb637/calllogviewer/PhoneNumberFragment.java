@@ -1,14 +1,8 @@
 package com.github.jmb637.calllogviewer;
 
-import android.Manifest;
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -19,11 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.github.jmb637.calllogviewer.model.PhoneNumber;
+
+import java.util.List;
+
 /**
  * A fragment that displays a recycler view containing every phone number found in the call log.
  */
-public class PhoneNumberFragment extends Fragment implements AdapterView.OnItemSelectedListener, LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int REQUEST_CALL_LOG = 0;
+public class PhoneNumberFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private PhoneNumberAdapter adapter;
 
     /**
@@ -49,12 +46,6 @@ public class PhoneNumberFragment extends Fragment implements AdapterView.OnItemS
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         configureActionBar(actionBar, inflater);
 
-        if (getActivity().checkSelfPermission(Manifest.permission.READ_CALL_LOG) ==
-                PackageManager.PERMISSION_GRANTED) {
-            getLoaderManager().initLoader(0, savedInstanceState, this);
-        } else {
-            requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG}, REQUEST_CALL_LOG);
-        }
 
         return view;
     }
@@ -83,45 +74,8 @@ public class PhoneNumberFragment extends Fragment implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    /**
-     * @return a cursor loader for fetching phone calls from the call log
-     */
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return CallLogCursorParser.getCursorLoader(getActivity());
-    }
-
-    /**
-     * Populate the adapter with data from the cursor.
-     */
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapPhoneNumbers(CallLogCursorParser.getPhoneNumbers(data));
-    }
-
-    /**
-     * Clear the adapter.
-     */
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapPhoneNumbers(null);
-    }
-
-    /**
-     * Begin loading from the call log when the user gives permission.
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CALL_LOG) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLoaderManager().initLoader(0, null, this);
-            } else {
-                throw new RuntimeException();
-            }
-        }
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        adapter.swapPhoneNumbers(phoneNumbers);
     }
 
     private void configureActionBar(ActionBar actionBar, LayoutInflater inflater) {

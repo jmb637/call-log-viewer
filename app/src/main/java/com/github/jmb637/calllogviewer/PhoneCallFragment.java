@@ -1,7 +1,7 @@
 package com.github.jmb637.calllogviewer;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,22 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.jmb637.calllogviewer.model.PhoneNumber;
+
 /**
  * A fragment that displays a phone number and a recycler view holding the list of calls associated
  * with that phone number.
  */
 public class PhoneCallFragment extends Fragment {
+    private View view;
+
     /**
      * Standard fragment override to return this fragment's view.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_phone_call, container, false);
+        view = inflater.inflate(R.layout.fragment_phone_call, container, false);
+        return view;
+    }
 
-        Intent intent = getActivity().getIntent();
-        final PhoneNumber phoneNumber = (PhoneNumber) intent.getSerializableExtra("phoneNumber");
-
+    public void setPhoneNumber(final PhoneNumber phoneNumber) {
         String formattedNumber = PhoneNumberUtils.formatNumber(phoneNumber.getNumber(), "US");
         TextView phoneNumberView = (TextView) view.findViewById(R.id.phoneNumberView);
         phoneNumberView.setText(formattedNumber);
@@ -51,7 +55,5 @@ public class PhoneCallFragment extends Fragment {
         PhoneCallAdapter adapter = new PhoneCallAdapter(phoneNumber.getCalls());
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.phoneCallRecyclerView);
         recyclerView.setAdapter(adapter);
-
-        return view;
     }
 }

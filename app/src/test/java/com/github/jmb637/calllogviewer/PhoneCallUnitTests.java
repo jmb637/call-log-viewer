@@ -1,5 +1,8 @@
 package com.github.jmb637.calllogviewer;
 
+import com.github.jmb637.calllogviewer.model.CallType;
+import com.github.jmb637.calllogviewer.model.PhoneCall;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

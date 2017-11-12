@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.jmb637.calllogviewer.model.CallType;
+import com.github.jmb637.calllogviewer.model.PhoneCall;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,11 +24,16 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
      * A simple view holder required by the recycler view.
      */
     public static class PhoneCallViewHolder extends RecyclerView.ViewHolder {
-        /**
-         * @param itemView the root view of an item in a recycler view
-         */
+        public final TextView dateView;
+        public final TextView durationView;
+        public final TextView callTypeView;
+
         public PhoneCallViewHolder(View itemView) {
             super(itemView);
+
+            dateView = (TextView) itemView.findViewById(R.id.dateView);
+            durationView = (TextView) itemView.findViewById(R.id.durationView);
+            callTypeView = (TextView) itemView.findViewById(R.id.callTypeView);
         }
     }
 
@@ -64,7 +72,7 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
         PhoneCall phoneCall = phoneCalls.get(position);
 
         String formattedDate = dateFormat.format(phoneCall.getDate());
-        TextView dateView = (TextView) holder.itemView.findViewById(R.id.dateView);
+        TextView dateView = holder.dateView;
         dateView.setText(formattedDate);
 
         long duration = phoneCall.getDuration();
@@ -73,11 +81,11 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
         long seconds = duration % 60;
         String formattedDuration = String.format(Locale.getDefault(),
                 "%dh:%02dm:%02ds", hours, minutes, seconds);
-        TextView durationView = (TextView) holder.itemView.findViewById(R.id.durationView);
+        TextView durationView = holder.durationView;
         durationView.setText(formattedDuration);
 
         String formattedCallType = formatCallType(phoneCall.getType());
-        TextView callTypeView = (TextView) holder.itemView.findViewById(R.id.callTypeView);
+        TextView callTypeView = holder.callTypeView;
         callTypeView.setText(formattedCallType);
     }
 

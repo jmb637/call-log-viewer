@@ -1,4 +1,4 @@
-package com.github.jmb637.calllogviewer;
+package com.github.jmb637.calllogviewer.model;
 
 import android.content.Context;
 import android.content.CursorLoader;
@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Contains static methods for accessing the call log through a cursor.
+ * Contains methods for accessing the call log through a cursor.
  */
-public class CallLogCursorParser {
+public class CallLogCursorParser implements PhoneNumberCursorParser {
     private static class PhoneNumberArgs {
         public String location;
         public ArrayList<PhoneCall> calls = new ArrayList<>();
@@ -23,10 +23,10 @@ public class CallLogCursorParser {
 
     /**
      * @param context the context of the app
-     * @return a cursor loader that will load a cursor compatible with the other methods
-     * in this class
+     * @return a cursor loader that will load a cursor compatible with the parser
      */
-    public static CursorLoader getCursorLoader(Context context) {
+    @Override
+    public CursorLoader getCursorLoader(Context context) {
         String projection[] = {CallLog.Calls.NUMBER, CallLog.Calls.DATE,
                 CallLog.Calls.DURATION, CallLog.Calls.TYPE, CallLog.Calls.GEOCODED_LOCATION};
         String sortOrder = CallLog.Calls.DATE + " DESC";
@@ -37,7 +37,8 @@ public class CallLogCursorParser {
      * @param cursor a cursor specified by the getCursorLoader method to be parsed
      * @return a list of all phone numbers found in the call log
      */
-    public static List<PhoneNumber> getPhoneNumbers(@NonNull Cursor cursor) {
+    @Override
+    public List<PhoneNumber> parsePhoneNumbers(@NonNull Cursor cursor) {
         HashMap<String, PhoneNumberArgs> argsByNumber = groupArgsByNumber(cursor);
 
         ArrayList<PhoneNumber> phoneNumbers = new ArrayList<>();
@@ -49,7 +50,7 @@ public class CallLogCursorParser {
         return Collections.unmodifiableList(phoneNumbers);
     }
 
-    private static HashMap<String, PhoneNumberArgs> groupArgsByNumber(@NonNull Cursor cursor) {
+    private HashMap<String, PhoneNumberArgs> groupArgsByNumber(@NonNull Cursor cursor) {
         HashMap<String, PhoneNumberArgs> argsByNumber = new HashMap<>();
 
         int initialPosition = cursor.getPosition();

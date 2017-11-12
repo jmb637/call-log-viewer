@@ -1,4 +1,4 @@
-package com.github.jmb637.calllogviewer;
+package com.github.jmb637.calllogviewer.model;
 
 /**
  * An enum that contains an entry for each call type used by the call log.
