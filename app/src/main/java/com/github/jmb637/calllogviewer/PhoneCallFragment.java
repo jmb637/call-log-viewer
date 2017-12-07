@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class PhoneCallFragment extends Fragment {
 
     public void setPhoneNumber(final PhoneNumber phoneNumber) {
         String formattedNumber = PhoneNumberUtils.formatNumber(phoneNumber.getNumber(), "US");
+        formattedNumber = formattedNumber == null ? "Unknown" : formattedNumber;
         TextView phoneNumberView = (TextView) view.findViewById(R.id.phoneNumberView);
         phoneNumberView.setText(formattedNumber);
 
@@ -46,8 +48,10 @@ public class PhoneCallFragment extends Fragment {
             }
         });
 
-        if (!phoneNumber.getLocation().isEmpty()) {
-            TextView locationView = (TextView) view.findViewById(R.id.locationView);
+        TextView locationView = (TextView) view.findViewById(R.id.locationView);
+        if (phoneNumber.getLocation() == null || phoneNumber.getLocation().isEmpty()) {
+            locationView.setVisibility(View.GONE);
+        } else {
             locationView.setText(phoneNumber.getLocation());
             locationView.setVisibility(View.VISIBLE);
         }

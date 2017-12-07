@@ -80,23 +80,22 @@ public class PhoneNumberAdapter
         holder.itemView.setTag(phoneNumber);
 
         String formattedNumber = PhoneNumberUtils.formatNumber(phoneNumber.getNumber(), "US");
-        TextView phoneNumberView = holder.phoneNumberView;
-        phoneNumberView.setText(formattedNumber);
+        formattedNumber = formattedNumber == null ? "Unknown" : formattedNumber;
+        holder.phoneNumberView.setText(formattedNumber);
 
-        if (phoneNumber.getLocation() != null && !phoneNumber.getLocation().isEmpty()) {
-            TextView locationView = holder.locationView;
-            locationView.setText(phoneNumber.getLocation());
-            locationView.setVisibility(View.VISIBLE);
+        if (phoneNumber.getLocation() == null || phoneNumber.getLocation().isEmpty()) {
+            holder.locationView.setVisibility(View.GONE);
+        } else {
+            holder.locationView.setText(phoneNumber.getLocation());
+            holder.locationView.setVisibility(View.VISIBLE);
         }
 
         String formattedCallCount = String.format(Locale.getDefault(),
                 "%d", phoneNumber.getCalls().size());
-        TextView callCountView = holder.callCountView;
-        callCountView.setText(formattedCallCount);
+        holder.callCountView.setText(formattedCallCount);
 
         String formattedDate = dateFormat.format(phoneNumber.getMostRecent());
-        TextView mostRecentView = holder.mostRecentView;
-        mostRecentView.setText(formattedDate);
+        holder.mostRecentView.setText(formattedDate);
     }
 
     /**

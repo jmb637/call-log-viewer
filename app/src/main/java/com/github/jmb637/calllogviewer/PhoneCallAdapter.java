@@ -70,10 +70,8 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
         }
 
         PhoneCall phoneCall = phoneCalls.get(position);
-
         String formattedDate = dateFormat.format(phoneCall.getDate());
-        TextView dateView = holder.dateView;
-        dateView.setText(formattedDate);
+        holder.dateView.setText(formattedDate);
 
         long duration = phoneCall.getDuration();
         long hours = duration / (60 * 60);
@@ -81,12 +79,10 @@ public class PhoneCallAdapter extends RecyclerView.Adapter<PhoneCallAdapter.Phon
         long seconds = duration % 60;
         String formattedDuration = String.format(Locale.getDefault(),
                 "%dh:%02dm:%02ds", hours, minutes, seconds);
-        TextView durationView = holder.durationView;
-        durationView.setText(formattedDuration);
+        holder.durationView.setText(formattedDuration);
 
         String formattedCallType = formatCallType(phoneCall.getType());
-        TextView callTypeView = holder.callTypeView;
-        callTypeView.setText(formattedCallType);
+        holder.callTypeView.setText(formattedCallType);
     }
 
     /**
